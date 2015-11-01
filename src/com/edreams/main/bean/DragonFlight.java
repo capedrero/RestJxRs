@@ -2,7 +2,8 @@ package com.edreams.main.bean;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @XmlRootElement
 public class DragonFlight {
 	private DragonFlightBeanFields inBound;

@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 @XmlRootElement
+@JsonRootName(value="flight")
 @JsonPropertyOrder({ "id", "origin", "destination", "dateArrival", "dateDeparture","price","currency","typeOffer" })
 public class Flight {
 	private Integer id;
@@ -18,8 +20,6 @@ public class Flight {
 	private String typeOffer = TYPE_FLIGHT_OFFER.REGULAR_FLIGHT;
 
 	private Date dateTripTimeDifference; 
-	//TODO exchange
-	//private ExchangePriceBean calculateExchangePrice; 
 	
 	
 	public Flight() {
@@ -54,15 +54,12 @@ public class Flight {
 		this.currency = currency;
 	}
 	
-/*	public void setDateTripTimeDifference(Date dateTripTimeDifference) {
-		this.dateTripTimeDifference = dateTripTimeDifference;
-	}*/
-	
 
-	/*public void setCalculateExchangePrice(ExchangePriceBean calculateExchangePrice) {
-		this.calculateExchangePrice = calculateExchangePrice;
+	public void setTypeOffer(String typeOffer) {
+		this.typeOffer = typeOffer;
 	}
-*/
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -107,18 +104,4 @@ public class Flight {
 				+ (dateTripTimeDifference != null ? "dateTripTimeDifference=" + dateTripTimeDifference : "") + "]";
 	}
 
-
-
-	/*public Date getDateTripTimeDifference() {
-		return dateTripTimeDifference;
-	}*/
-
-
-	
-
-
-	
-	
-	
-	
 }

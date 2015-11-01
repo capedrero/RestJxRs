@@ -20,6 +20,7 @@ public class ParameterProcessor implements IParameterProcessor{
 	
 	@Override
 	public String getFirstParameter(final String key) {
+		System.out.println(key + " "+context.getQueryParameters().getFirst(key));
 		return context.getQueryParameters().getFirst(key);
 	}
 	

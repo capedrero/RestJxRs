@@ -37,7 +37,7 @@ public class ManagerFlightDB {
 		return flightTable.get(id);
 	}
 	
-	public void insertFlightr(Flight flight) throws Exception {
+	public void insertFlight(Flight flight) throws Exception {
 		flight.setId(flightTable.size()+1);
 		flightTable.put(flight.getId(), flight);
 		jsonManager.writeJsonJackson(flightTable.values());
@@ -60,9 +60,12 @@ public class ManagerFlightDB {
 		List<Flight> searchedList = new SearcherOriginDestinFlight(origin, destin, newList).getSearchList();
 		if(comparator!=null){
 			Collections.sort(searchedList, comparator);
-	    }
-		jsonManager.writeJsonJackson(searchedList);
+	    }	
 		return searchedList;
+	}
+
+	public void saveFlights(Collection<Flight> flightCollection) throws Exception {
+		jsonManager.writeJsonJackson(flightCollection);
 	}
 	
 }

@@ -3,8 +3,10 @@ package com.edreams.main.model;
 import com.edreams.main.bean.CURRENCIES;
 import com.edreams.main.bean.ExchangePriceBean;
 import com.edreams.main.dao.ConsumerRestService;
+import com.edreams.main.model.compare.ExchangeRate;
 
 public class TransformParamsUrlCurrencyService {
+	private static String rootName;
 	private static String url;
 	private static ExchangePriceBean exchangePriceBean;
 	private static final String[] CCY = {CURRENCIES.EUR,CURRENCIES.USD,CURRENCIES.GBP,CURRENCIES.JPY}; 
@@ -21,15 +23,17 @@ public class TransformParamsUrlCurrencyService {
 	
 	public void processCurrencys() throws Exception{
 
-		ConsumerRestService<ExchangeRateInitial> consumer = new ConsumerRestService<ExchangeRateInitial>();
-		consumer.setClazz(ExchangeRateInitial.class);
+		ConsumerRestService consumer = new ConsumerRestService();		
+		if(rootName!=null){
+			consumer.setRootName(rootName);
+		}
 		exchangePriceBean = new ExchangePriceBean();
 		for (String ccyOrigin : CCY) {
 			exchangePriceBean.inizialiceOriginMap(ccyOrigin);
 			for (String ccyDest : CCY) {
 				consumer.setUrl(url+ccyOrigin+"&to="+ccyDest);
-				ExchangeRateInitial bean = consumer.consumeServiceToJson();
-				exchangePriceBean.putRate(ccyOrigin , ccyDest, bean.getObj().getRate());
+				ExchangeRate bean = consumer.consumeServiceToJson(ExchangeRate.class);
+				exchangePriceBean.putRate(ccyOrigin , ccyDest, bean.getRate());
 			}
 		}
 	}
@@ -37,9 +41,17 @@ public class TransformParamsUrlCurrencyService {
 	public static ExchangePriceBean getExchangePriceBean() {
 		return exchangePriceBean;
 	}
+	public Double getRate(final String ccyOrigin, final String ccyDestin) {
+		return exchangePriceBean.getRate(ccyOrigin, ccyDestin);
+	}
 	public static void setUrl(String url) {
 		TransformParamsUrlCurrencyService.url = url;
 	}
+
+	public static void setRootName(String rootName) {
+		TransformParamsUrlCurrencyService.rootName = rootName;
+	}
+	
 	
 	
 		

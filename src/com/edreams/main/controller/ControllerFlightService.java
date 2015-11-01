@@ -9,13 +9,13 @@ import com.edreams.main.model.ITransformFlightProcess;
 import com.edreams.main.model.ModelFlightService;
 import com.edreams.main.model.compare.IBuilderComparator;
 
-public class ControllerFlightService<T> {
+public class ControllerFlightService {
 
-	private ModelFlightService<T> modelFlightService;
+	private ModelFlightService modelFlightService;
 	
 	public ControllerFlightService() {
 		super();			
-		modelFlightService = new ModelFlightService<T>();
+		modelFlightService = new ModelFlightService();
 	}
 	
 	public void startDB() throws Exception {
@@ -31,12 +31,15 @@ public class ControllerFlightService<T> {
 	public void setTransformFlightProcess(ITransformFlightProcess transformFlightProcess) throws Exception {
 		this.modelFlightService.setTransformFlightProcess(transformFlightProcess);
 	}
-	public void setConsumerRestService(ConsumerRestService<T> consumerRestService){
+	public void setConsumerRestService(ConsumerRestService consumerRestService){
 		this.modelFlightService.setConsumerRestService(consumerRestService);	
 	}
 
 	public Collection<Flight> getOrderFlights(String origin, String destin, IBuilderComparator comparator) throws Exception {
 		return this.modelFlightService.getOrderFlights(origin, destin, comparator);
+	}
+	public void saveFlights(final Collection<Flight> flightCollection) throws Exception {
+		this.modelFlightService.saveFlights(flightCollection);
 	}
 	
 }

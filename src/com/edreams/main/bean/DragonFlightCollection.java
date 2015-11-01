@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 @XmlRootElement
 public class DragonFlightCollection {
 

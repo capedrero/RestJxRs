@@ -1,10 +1,12 @@
 package com.edreams.main.model.compare;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 import com.edreams.main.bean.Flight;
+import com.edreams.main.model.compare.strategy.IComparatorStrategy;
 import com.edreams.main.service.IParameterProcessor;
 
 public class BuilderComparator implements IBuilderComparator {
@@ -14,12 +16,11 @@ public class BuilderComparator implements IBuilderComparator {
 	private List<IComparatorStrategy> listComparatorStrategy;
 
 
-	public BuilderComparator(IParameterProcessor parameterProcessor) {
+	public BuilderComparator(IParameterProcessor parameterProcessor,IComparatorStrategy[] aComparatorStrategies ) {
 		super();
 		this.parameterProcessor = parameterProcessor;
 		listComparatorStrategy = new ArrayList<>();
-		listComparatorStrategy.add(new PriceOrderComparatorStrategy(parameterProcessor));
-		listComparatorStrategy.add(new TimeDifferenceComparatorStrategy(parameterProcessor));
+		listComparatorStrategy.addAll(Arrays.asList(aComparatorStrategies));
 		
 	}
 

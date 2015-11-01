@@ -21,11 +21,14 @@ import com.edreams.main.bean.Flight;
 import com.edreams.main.model.TransformParamsUrlCurrencyService;
 import com.edreams.main.model.compare.BuilderComparator;
 import com.edreams.main.model.compare.IBuilderComparator;
+import com.edreams.main.model.compare.strategy.IComparatorStrategy;
+import com.edreams.main.model.compare.strategy.PriceOrderComparatorStrategy;
+import com.edreams.main.model.compare.strategy.TimeDifferenceComparatorStrategy;
 import com.edreams.main.service.ParameterProcessor;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestConsumerCurrencies {
 	
-	@Test
+
 	public void testPriceOrder() {
 		try {
 
@@ -46,7 +49,10 @@ public class TestConsumerCurrencies {
 			 Mockito.when(parameterProcessor.getFirstParameter("sorter")).thenReturn("price");
 			 Mockito.when(parameterProcessor.getFirstParameter("orderBy")).thenReturn("EUR");		
 			 Mockito.when(parameterProcessor.getFirstParameter("typeSorter")).thenReturn("asc");
-			IBuilderComparator comparator = new BuilderComparator(parameterProcessor);
+			
+			 IBuilderComparator comparator = new BuilderComparator(parameterProcessor,
+					  new IComparatorStrategy[] { new PriceOrderComparatorStrategy(parameterProcessor),
+							  					  new TimeDifferenceComparatorStrategy(parameterProcessor) });
 			Collections.sort(lFligths, comparator.getComparator());
 			System.out.println("con orden");
 			for (Flight flight : lFligths) {
@@ -60,10 +66,11 @@ public class TestConsumerCurrencies {
 
 		}	
 	}
-	
+	@Test
 	public void testConcumerCurrencies(){
 		try{
-		TransformParamsUrlCurrencyService.setUrl("http://jarvisai.herokuapp.com/currency?from=");	
+		TransformParamsUrlCurrencyService.setUrl("http://jarvisai.herokuapp.com/currency?from=");
+		TransformParamsUrlCurrencyService.setRootName("jarvis");
 		TransformParamsUrlCurrencyService.getInstance();
 		Map<String, Double> map = TransformParamsUrlCurrencyService.getExchangePriceBean().getOriginMap(CURRENCIES.GBP);
 		System.out.println(CURRENCIES.GBP);

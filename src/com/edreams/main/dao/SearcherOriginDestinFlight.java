@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.edreams.main.bean.Flight;
 
-public class SearcherOriginDestinFlight {
+public class SearcherOriginDestinFlight implements ISearchFlight{
 	private String origin;
 	private String destin;
 	private List<Flight> list;
@@ -19,6 +19,9 @@ public class SearcherOriginDestinFlight {
 
 	public List<Flight> getSearchList() {
 		List<Flight> newList = new ArrayList<>();
+		if(origin==null && destin==null){
+			return list;
+		}
 		if(origin!=null){
 		for (Flight flight : list) {
 			if(origin.equals(flight.getOrigin())){

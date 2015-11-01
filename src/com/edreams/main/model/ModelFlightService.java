@@ -8,11 +8,11 @@ import com.edreams.main.dao.ConsumerRestService;
 import com.edreams.main.dao.ManagerFlightDB;
 import com.edreams.main.model.compare.IBuilderComparator;
 
-public class ModelFlightService <T>{
+public class ModelFlightService {
 	private DragonFlightCollection dragonFlightCollection;
 	private ManagerFlightDB dao;	
 	private ITransformFlightProcess transformFlightProcess;
-	private ConsumerRestService<T> consumerRestService;
+	private ConsumerRestService consumerRestService;
 
 	public ModelFlightService() {
 		super();
@@ -20,7 +20,7 @@ public class ModelFlightService <T>{
 	}
 
 	public void consumeDragonFlightWebService() throws Exception{			
-		this.dragonFlightCollection = (DragonFlightCollection) consumerRestService.consumeServiceToJson();
+		this.dragonFlightCollection =  consumerRestService.consumeServiceToJson(DragonFlightCollection.class);
 	}
 	public void startDB() throws Exception{	
 		dao.startDB(transformFlightProcess.transform(this.dragonFlightCollection));
@@ -34,11 +34,15 @@ public class ModelFlightService <T>{
 		this.transformFlightProcess = transformFlightProcess;
 	}
 	
-	public void setConsumerRestService(ConsumerRestService<T> consumerRestService){
+	public void setConsumerRestService(ConsumerRestService consumerRestService){
 		this.consumerRestService =  consumerRestService;
 	}
 	public Collection<Flight> getOrderFlights(String origin, String destin, IBuilderComparator builderComparator) throws Exception {
 		return this.dao.getOrderFlights(origin, destin, builderComparator.getComparator());
+	}
+
+	public void saveFlights(final Collection<Flight> flightCollection) throws Exception {
+		this.dao.saveFlights(flightCollection);
 	}
 	
 }
