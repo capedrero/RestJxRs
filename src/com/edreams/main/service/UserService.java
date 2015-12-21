@@ -23,7 +23,8 @@ public class UserService {
 
 	public UserService() throws Exception {
 		super();
-		controllerUserService = new ControllerUserService();		
+		controllerUserService = new ControllerUserService();	
+		controllerUserService.startDB();
 	}
 
 	@GET
@@ -44,27 +45,25 @@ public class UserService {
 	@PUT
 	@Path("/updateUser")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(User user) throws Exception {
-		String result = "User updated : " + user;			
+	public Response updateUser(User user) throws Exception {		
 		controllerUserService.updateUser(user);		
-		return Response.status(201).entity(result).build();
+		return Response.status(201).entity(user.toString()).build();
 	}
 	@POST
 	@Path("/insertUser")
+	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response insertUser(User user) throws Exception {
-		String result = "User saved : " + user;		
+	public User insertUser(User user) throws Exception {
 		controllerUserService.insertUser(user);
-		return Response.status(201).entity(result).build();
+		return user;
 		
 	}
 	
 	@DELETE
 	@Path("/deleteUser")
 	public Response deleteUser(User user) throws Exception {
-		controllerUserService.deleteUser(user);
-		String result = "User delete : " + user;		
-		return Response.status(201).entity(result).build();
+		controllerUserService.deleteUser(user);	
+		return Response.status(201).entity(user.toString()).build();
 	}
 				
 		

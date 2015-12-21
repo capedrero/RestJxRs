@@ -4,8 +4,8 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 @XmlRootElement
 @JsonRootName(value="flight")
 @JsonPropertyOrder({ "id", "origin", "destination", "dateArrival", "dateDeparture","price","currency","typeOffer" })

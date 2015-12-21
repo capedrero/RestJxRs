@@ -6,12 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
 import com.edreams.main.bean.Booking;
+import com.edreams.main.dao.CommandObjectReaderList;
 import com.edreams.main.model.ITransformFlightBean;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class JsonBookingManager {
@@ -22,8 +20,9 @@ public class JsonBookingManager {
 		this.file = file;
 	}
 	public Map<Integer, Booking> readJsonJackson() throws Exception{
-		ObjectMapper mapper = new ObjectMapper();
-		List<Booking> myObjects = mapper.readValue(new JsonFactory().createJsonParser(file), new TypeReference<List<Booking>>(){});
+		//ObjectMapper mapper = new ObjectMapper();
+		//List<Booking> myObjects = mapper.readValue(new JsonFactory().createJsonParser(file), new TypeReference<List<Booking>>(){});
+		List<Booking> myObjects = new CommandObjectReaderList().processRoot(null, List.class, Booking.class).readValue(file);
 		Map<Integer, Booking> map = new HashMap<>();
 		int i = 1;
 		for (Booking booking : myObjects) {

@@ -1,26 +1,27 @@
 package com.edreams.main.model;
 
 import java.util.Collection;
+import java.util.List;
 
-import com.edreams.main.bean.DragonFlightCollection;
+import com.edreams.main.bean.DragonFlight;
 import com.edreams.main.bean.Flight;
-import com.edreams.main.dao.ConsumerRestService;
+import com.edreams.main.dao.IConsumerRestService;
 import com.edreams.main.dao.ManagerFlightDB;
 import com.edreams.main.model.compare.IBuilderComparator;
 
 public class ModelFlightService {
-	private DragonFlightCollection dragonFlightCollection;
+	private List<DragonFlight> dragonFlightCollection;
 	private ManagerFlightDB dao;	
 	private ITransformFlightProcess transformFlightProcess;
-	private ConsumerRestService consumerRestService;
+	private IConsumerRestService consumerRestService;
 
 	public ModelFlightService() {
 		super();
 		this.dao = new ManagerFlightDB();		
 	}
 
-	public void consumeDragonFlightWebService() throws Exception{			
-		this.dragonFlightCollection =  consumerRestService.consumeServiceToJson(DragonFlightCollection.class);
+	public void consumeDragonFlightWebService() throws Exception{	
+		this.dragonFlightCollection =  consumerRestService.consumeServiceToJson(List.class, DragonFlight.class);
 	}
 	public void startDB() throws Exception{	
 		dao.startDB(transformFlightProcess.transform(this.dragonFlightCollection));
@@ -34,7 +35,7 @@ public class ModelFlightService {
 		this.transformFlightProcess = transformFlightProcess;
 	}
 	
-	public void setConsumerRestService(ConsumerRestService consumerRestService){
+	public void setConsumerRestService(IConsumerRestService consumerRestService){
 		this.consumerRestService =  consumerRestService;
 	}
 	public Collection<Flight> getOrderFlights(String origin, String destin, IBuilderComparator builderComparator) throws Exception {

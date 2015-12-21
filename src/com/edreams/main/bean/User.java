@@ -2,7 +2,9 @@ package com.edreams.main.bean;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @XmlRootElement
 public class User {
@@ -67,7 +69,7 @@ public class User {
 		this.surName = surName;
 	}
 
-	
+
 	public String getRole() {
 		return (role!=null)?role.toString():"";
 	}
@@ -86,7 +88,7 @@ public class User {
 				+ (surName != null ? "surName=" + surName + ", " : "")
 				+ (address != null ? "address=" + address + ", " : "")
 				+ (gender != null ? "gender=" + gender + ", " : "") + (age != null ? "age=" + age + ", " : "")
-				+ (role != null ? "role=" + role.getClass() : "") + "]";
+				+ (role != null ? "role=" + role.getType() : "") + "]";
 	}
 	
 

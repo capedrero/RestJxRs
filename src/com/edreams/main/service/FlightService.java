@@ -12,10 +12,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import com.edreams.main.bean.DragonFlightCollection;
+import org.springframework.stereotype.Component;
+
 import com.edreams.main.bean.Flight;
+import com.edreams.main.config.ConfigurationSpring;
+import com.edreams.main.config.DragonFlightProperties;
+import com.edreams.main.config.FactoryBeans;
 import com.edreams.main.controller.ControllerFlightService;
 import com.edreams.main.dao.ConsumerRestService;
+import com.edreams.main.dao.IConsumerRestService;
 import com.edreams.main.model.FlightBeanTranslator;
 import com.edreams.main.model.ITransformFlightBean;
 import com.edreams.main.model.ITransformFlightProcess;
@@ -25,17 +30,20 @@ import com.edreams.main.model.compare.strategy.IComparatorStrategy;
 import com.edreams.main.model.compare.strategy.PriceOrderComparatorStrategy;
 import com.edreams.main.model.compare.strategy.TimeDifferenceComparatorStrategy;
 
-@Path("/flightService/")
+@Component
+@Path("/flightService")
 public class FlightService {
 
 	private ControllerFlightService controllerFlightService;
-
+	private DragonFlightProperties conf = FactoryBeans.getInstance(ConfigurationSpring.class).getBean(DragonFlightProperties.class);
 	
 	public FlightService() throws Exception {
 		super();
 		this.controllerFlightService = new ControllerFlightService();	
 		this.controllerFlightService.setTransformFlightProcess(new TransformFlights(Arrays.asList(new ITransformFlightBean[]{new FlightBeanTranslator()})));
-		this.controllerFlightService.setConsumerRestService(new ConsumerRestService("http://odigeo-testbackend.herokuapp.com"));
+		IConsumerRestService consumer = new ConsumerRestService(conf.getUrl());//"http://odigeo-testbackend.herokuapp.com");
+		consumer.setRootName(conf.getRootName());//"results");
+		this.controllerFlightService.setConsumerRestService(consumer);
 		this.controllerFlightService.startDB();
 	}
 	
@@ -43,22 +51,14 @@ public class FlightService {
 	@Path("/getFlights")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Flight> getFlights() {	
+		System.out.println("------getFlights-----");
 		return controllerFlightService.getFlights();
 	}
-	@GET
-	@Path("/getOrderFlights/")
-	//sorter/{sorter}/typeSorter/{typeSorter}/type/{type}/
-	/**
-	 * 	/*@QueryParam("sorter") String sorter,
-	 *	  @QueryParam("typeSorter") String typeSorter, 
-	 *	  @QueryParam("type") String type,
-	 *	  @QueryParam("origin") String origin, 
-	 *	  @QueryParam("destin") String destin) throws Exception
-	 * @param context
-	 * @return
-	 * @throws Exception
-	 */
+
+	@GET	
+	@Path("/getOrderFlights")
 	@Produces(MediaType.APPLICATION_JSON)
+
 	public Collection<Flight> getOrderFlights(@Context UriInfo context)throws Exception {
 		
 		IParameterProcessor parameterProcessor = new ParameterProcessor();
@@ -81,7 +81,7 @@ public class FlightService {
 	public void setTransformFlightProcess(ITransformFlightProcess transformFlightProcess) throws Exception {
 		controllerFlightService.setTransformFlightProcess(transformFlightProcess);
 	}
-	public void setConsumerRestService(ConsumerRestService consumerRestService) throws Exception {
+	public void setConsumerRestService(IConsumerRestService consumerRestService) throws Exception {
 		controllerFlightService.setConsumerRestService(consumerRestService);
 	}
 }

@@ -9,7 +9,7 @@ public class Role implements IRole{
 		super();
 		this.type = type;
 	}
-
+	@Override
 	public String getType() {
 		return type;
 	}

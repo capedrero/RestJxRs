@@ -4,15 +4,15 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.edreams.main.bean.User;
 import com.edreams.main.dao.ManagerUserDB;
 import com.edreams.main.dao.json.JsonUserManager;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 

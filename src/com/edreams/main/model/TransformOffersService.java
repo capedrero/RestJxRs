@@ -7,6 +7,7 @@ import java.util.Map;
 import com.edreams.main.bean.DestinationDiscountBean;
 import com.edreams.main.bean.DestinationDiscountMap;
 import com.edreams.main.dao.ConsumerRestService;
+import com.edreams.main.dao.IConsumerRestService;
 
 public class TransformOffersService {
 	private static TransformOffersService mySelf;
@@ -27,13 +28,13 @@ public class TransformOffersService {
 
 	
 public void process() throws Exception{
-	ConsumerRestService consumer = new ConsumerRestService();
+	IConsumerRestService consumer = new ConsumerRestService();
 	//consumer.setUrl("http://odigeo-testbackend.herokuapp.com/discount");
 	consumer.setUrl(TransformOffersService.url);	
 	if(TransformOffersService.rootName!=null){
 		consumer.setRootName(rootName);
 	}
-	List<DestinationDiscountBean> beans = consumer.consumeServiceToJsonList(DestinationDiscountBean.class);		
+	List<DestinationDiscountBean> beans = consumer.consumeServiceToJson(List.class, DestinationDiscountBean.class);		
 	
 	for (DestinationDiscountBean bean :  beans) {
 		destinationDiscountMap.putDiscount(bean.getCity(), bean.getRateDiscount());

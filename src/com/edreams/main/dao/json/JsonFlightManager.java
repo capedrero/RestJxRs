@@ -6,12 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
 import com.edreams.main.bean.Flight;
+import com.edreams.main.dao.CommandObjectReaderList;
 import com.edreams.main.model.ITransformFlightBean;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class JsonFlightManager {
@@ -22,8 +20,9 @@ public class JsonFlightManager {
 		this.file = file;
 	}
 	public Map<Integer, Flight> readJsonJackson() throws Exception{
-		ObjectMapper mapper = new ObjectMapper();
-		List<Flight> myObjects = mapper.readValue(new JsonFactory().createJsonParser(file), new TypeReference<List<Flight>>(){});
+		//ObjectMapper mapper = new ObjectMapper();
+		List<Flight> myObjects = new CommandObjectReaderList().processRoot(null, List.class, Flight.class).readValue(file);
+		//List<Flight> myObjects = mapper.readValue(new JsonFactory().createJsonParser(file), new TypeReference<List<Flight>>(){});
 		Map<Integer, Flight> map = new HashMap<>();
 		int i = 1;
 		for (Flight dragonFlight : myObjects) {

@@ -16,7 +16,9 @@ public class ModelBookingService {
 	public Booking getBooking(final Integer id) {
 		return dao.getBooking(id);
 	}
-
+	public void startDB() throws Exception{			
+		this.dao.startDB();
+	}
 	public Collection<Booking> getBookings() {
 		return dao.getBookings();
 	}

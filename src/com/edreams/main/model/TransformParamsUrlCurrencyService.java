@@ -3,6 +3,7 @@ package com.edreams.main.model;
 import com.edreams.main.bean.CURRENCIES;
 import com.edreams.main.bean.ExchangePriceBean;
 import com.edreams.main.dao.ConsumerRestService;
+import com.edreams.main.dao.IConsumerRestService;
 import com.edreams.main.model.compare.ExchangeRate;
 
 public class TransformParamsUrlCurrencyService {
@@ -23,7 +24,7 @@ public class TransformParamsUrlCurrencyService {
 	
 	public void processCurrencys() throws Exception{
 
-		ConsumerRestService consumer = new ConsumerRestService();		
+		IConsumerRestService consumer = new ConsumerRestService();		
 		if(rootName!=null){
 			consumer.setRootName(rootName);
 		}

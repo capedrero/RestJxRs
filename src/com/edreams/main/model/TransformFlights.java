@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.edreams.main.bean.DragonFlight;
-import com.edreams.main.bean.DragonFlightCollection;
 import com.edreams.main.bean.Flight;
 
 public class TransformFlights implements ITransformFlightProcess{
@@ -15,16 +14,14 @@ public class TransformFlights implements ITransformFlightProcess{
 	public TransformFlights(List<ITransformFlightBean> listITransformFlightBean) {
 		super();
 		this.listTransformProcess = listITransformFlightBean;		
-		//TODO
-		//this.listTransformProcess.add(new CalculatorRealPrice());
 	}
 	@Override
-	public  Map<Integer, Flight> transform(DragonFlightCollection dragonFlightCollection) throws Exception {
+	public  Map<Integer, Flight> transform(List<DragonFlight> dragonFlightCollection) throws Exception {
 	
 		Map<Integer, Flight> mapFlights = new HashMap<>();
 		int i = 1;
 		Flight flight;
-		for (DragonFlight dragonFlight : dragonFlightCollection.getListDragonFlights()) {
+		for (DragonFlight dragonFlight : dragonFlightCollection) {
 			flight =  new Flight();
 			flight.setId(i++);			
 			for (ITransformFlightBean transformProcess : listTransformProcess) {

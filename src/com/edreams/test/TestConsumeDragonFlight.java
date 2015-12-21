@@ -1,43 +1,32 @@
 package com.edreams.test;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.edreams.main.bean.DragonFlightCollection;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+import com.edreams.main.bean.DragonFlight;
+import com.edreams.main.config.ConfigurationSpring;
+import com.edreams.main.config.DragonFlightProperties;
+import com.edreams.main.config.FactoryBeans;
+import com.edreams.main.dao.ConsumerRestService;
+import com.edreams.main.dao.IConsumerRestService;
 
 public class TestConsumeDragonFlight {
+	private DragonFlightProperties conf = FactoryBeans.getInstance(ConfigurationSpring.class).getBean(DragonFlightProperties.class);
 
-	private Client client;
-	private ClientResponse response;
-	private WebResource webResource;
-
-	@Before
-	public void setUp() {
-		client = Client.create();
-	}
 
 	@Test
 	public void testConsumeDragonFlight() {
 		try {
-
-			webResource = client.resource("http://odigeo-testbackend.herokuapp.com");
-
-			response = webResource.accept("application/json").get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-			}
-
-			String output = response.getEntity(String.class);
-
-			DragonFlightCollection myObjects = new ObjectMapper().readValue(output, new TypeReference<DragonFlightCollection>() {});		
-			System.out.println("List Dragon Flught "+myObjects.getListDragonFlights().size());
+				
+			IConsumerRestService consumer = new ConsumerRestService(conf.getUrl());
+			consumer.setRootName(conf.getRootName());
+			List<DragonFlight> myObjects = consumer.consumeServiceToJson(List.class, DragonFlight.class);	
+			Assert.assertNotNull(myObjects);
+			Assert.assertNotEquals(0, myObjects.size());
+			System.out.println("List Dragon Flight "+myObjects.size());
 
 		} catch (Exception e) {
 

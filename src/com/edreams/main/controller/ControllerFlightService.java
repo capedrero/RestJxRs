@@ -1,10 +1,9 @@
 package com.edreams.main.controller;
 
 import java.util.Collection;
-import java.util.Map;
 
 import com.edreams.main.bean.Flight;
-import com.edreams.main.dao.ConsumerRestService;
+import com.edreams.main.dao.IConsumerRestService;
 import com.edreams.main.model.ITransformFlightProcess;
 import com.edreams.main.model.ModelFlightService;
 import com.edreams.main.model.compare.IBuilderComparator;
@@ -31,7 +30,7 @@ public class ControllerFlightService {
 	public void setTransformFlightProcess(ITransformFlightProcess transformFlightProcess) throws Exception {
 		this.modelFlightService.setTransformFlightProcess(transformFlightProcess);
 	}
-	public void setConsumerRestService(ConsumerRestService consumerRestService){
+	public void setConsumerRestService(IConsumerRestService consumerRestService){
 		this.modelFlightService.setConsumerRestService(consumerRestService);	
 	}
 

@@ -8,11 +8,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import com.edreams.main.bean.Booking;
-import com.edreams.main.bean.Flight;
-import com.edreams.main.bean.User;
 import com.edreams.main.controller.ControllerBookingService;
 
 @Path("/bookingService/")
@@ -23,7 +20,7 @@ public class BookingService {
 	public BookingService() throws Exception {
 		super();
 		this.controllerBookingService = new ControllerBookingService();
-
+		controllerBookingService.startDB();
 	}
 
 	@GET
@@ -36,25 +33,15 @@ public class BookingService {
 	@POST
 	@Path("/insertBooking")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response insertBooking(User user, Flight flight) throws Exception {
-
-		Booking booking = new Booking();
-		booking.setFlightID(flight.getId());
-		booking.setUserID(user.getId());
+	@Produces(MediaType.APPLICATION_JSON)
+	public Booking insertBooking(Booking booking) throws Exception {
+		
 		controllerBookingService.insertBooking(booking);
 		String result = "Booking saved : " + booking;
-		return Response.status(201).entity(result).build();
+		//return Response.status(201).entity(result).build();
+		return booking;
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

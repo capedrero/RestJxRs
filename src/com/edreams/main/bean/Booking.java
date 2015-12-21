@@ -5,43 +5,60 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Booking {
 	private Integer bookingID;
-	private Integer userID;
-	private Integer flightID;
+	private User user;
+	private Flight flight;
 
 	public Booking() {
 		super();
 	}
 
-	public Integer getBookingID() {
-		return bookingID;
-	}
+	
 
 	public void setBookingID(Integer bookingID) {
 		this.bookingID = bookingID;
 	}
 
-	public Integer getUserID() {
-		return userID;
+
+
+	public Integer getBookingID() {
+		return bookingID;
 	}
 
-	public void setUserID(Integer userID) {
-		this.userID = userID;
+
+
+	public User getUser() {
+		return user;
 	}
 
-	public Integer getFlightID() {
-		return flightID;
+
+
+	public Flight getFlight() {
+		return flight;
 	}
 
-	public void setFlightID(Integer flightID) {
-		this.flightID = flightID;
+ 
+
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+
+
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Booking [" + (bookingID != null ? "bookingID=" + bookingID + ", " : "")
-				+ (userID != null ? "userID=" + userID + ", " : "") + (flightID != null ? "flightID=" + flightID : "")
-				+ "]";
+				+ (user != null ? "user=" + user + ", " : "") + (flight != null ? "flight=" + flight : "") + "]";
 	}
 	
+	
+
+
+
 
 }

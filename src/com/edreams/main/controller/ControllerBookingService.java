@@ -12,7 +12,10 @@ public class ControllerBookingService {
 		super();
 		this.modelBookingService = new ModelBookingService();
 	}
-
+	public void startDB() throws Exception {		
+		this.modelBookingService.startDB();
+		
+	}
 	public Collection<Booking> getBookings() {
 		return modelBookingService.getBookings();
 	}

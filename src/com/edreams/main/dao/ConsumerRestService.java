@@ -25,7 +25,7 @@ public class  ConsumerRestService implements IConsumerRestService{
 		this.url = url;	
 	}
 
-
+	@Override
 	public <T> T consumeServiceToJson(Class<T> classToTransform) throws Exception {
 
 		String output = preClientProcess();
@@ -34,11 +34,12 @@ public class  ConsumerRestService implements IConsumerRestService{
 		return new CommandObjectReader().processRoot(rootName, classToTransform).readValue(output);		
 		
 	}
-	public <T> List<T> consumeServiceToJsonList(Class<T> classToTransform) throws Exception {
+	@Override
+	public <T, K> List<T> consumeServiceToJson(Class<K> rawType, Class<T> classToTransform) throws Exception {
 
 		String output = preClientProcess();
 			
-		return new CommandObjectReaderList().processRoot(rootName, classToTransform).readValue(output);		
+		return new CommandObjectReaderList().processRoot(rootName, rawType, classToTransform).readValue(output);		
 		
 	}
 	
@@ -57,12 +58,12 @@ public class  ConsumerRestService implements IConsumerRestService{
 	}
 
 
-
+	@Override
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
-
+	@Override
 	public void setRootName(String rootName) {
 		this.rootName = rootName;
 	}

@@ -20,8 +20,7 @@ public class ManagerBookingDao {
 	public void readDB() throws Exception{
 		bookingTable = jsonManager.readJsonJackson();
 	}
-	public void startDB(Map<Integer, Booking> bookingTable) throws Exception{
-		this.bookingTable = bookingTable;
+	public void startDB() throws Exception{		
 		jsonManager.writeJsonJackson(bookingTable.values());
 	}
 	

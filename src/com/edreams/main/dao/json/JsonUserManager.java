@@ -6,11 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
 import com.edreams.main.bean.User;
+import com.edreams.main.dao.CommandObjectReaderList;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUserManager {
 	private File file;
@@ -22,8 +20,9 @@ public class JsonUserManager {
 	}
 
 	public Map<Integer, User> readJsonUserJackson() throws Exception{
-		ObjectMapper mapper = new ObjectMapper();
-		List<User> myObjects = mapper.readValue(new JsonFactory().createJsonParser(file), new TypeReference<List<User>>(){});
+		//ObjectMapper mapper = new ObjectMapper();
+		//List<User> myObjects = mapper.readValue(new JsonFactory().createJsonParser(file), new TypeReference<List<User>>(){});
+		List<User> myObjects = new CommandObjectReaderList().processRoot(null, List.class, User.class).readValue(file);
 		Map<Integer, User> map = new HashMap<>();
 		for (User user : myObjects) {
 			map.put(user.getId(), user);
